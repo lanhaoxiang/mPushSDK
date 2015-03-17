@@ -6,6 +6,7 @@
 #pragma mark -- 可以使用此Key来获取应用的状态，状态值参见系统的 * UIApplicationState *
 static NSString *const AppStateKey = @"AppStateKey";  // 应用状态key
 
+
 #pragma mark --
 #pragma mark -- 创建本地通知时的Action值
 typedef NS_ENUM(NSUInteger, LocalPushActionType) {
@@ -25,7 +26,10 @@ typedef NS_ENUM(NSUInteger, LocalPushActionType) {
 *
 *  @param title     消息title内容
 *  @param content   消息content内容
-*  @param extention 参数字典,此字典包含用户自定义参数和应用状态参数。 获取应用状态参数可通过 AppStateKey 来获取，状态类型参见 * UIApplicationState *
+*  @param extention 参数字典
+*                   action 参数, tp : 1=打开应用内页面, 2=打开应用，3=打开url（默认 tp = 2）
+*                               val :对应tp所指定的值，tp为1时，val是所指定应用内界面的别名；tp为3时，val是所指定的url地址；tp为2时，val为空。（默认为空）
+*                               mode：远程通知时，会有此参数，iOS忽略。
 *
 *  @return BOOL 当返回YES时，仅处理至当前事件处，后续事件将不再执行，当返回NO时，按照事件链继续执行，直至返回YES或者所有事件执行完。
 */
@@ -79,6 +83,21 @@ typedef NS_ENUM(NSUInteger, LocalPushActionType) {
               viewAlias:(NSArray *)viewAlias
                 methods:(NSArray *)methods
            displayModes:(NSArray *)displayModes;
+
+
+/**
+ *  定义收到远程通知后的操作是否使用SDK内部实现（默认SDK内部实现）。如果SDK内部实现，需要按照需求实现'setDisplayViews:viewAlias:methods:displayModes'方法
+ *
+ *  @param _inSDK 是否SDK内实现
+ */
++ (void)setRemoteNotificationActionIMPInSDK:(BOOL)_inSDK;
+
+/**
+ *  定义收到本地通知后的操作是否使用SDK内部实现（默认SDK内部实现）。如果SDK内部实现，需要按照需求实现'setDisplayViews:viewAlias:methods:displayModes'方法
+ *
+ *  @param _inSDK 是否SDK内实现
+ */
++ (void)setLocalNotificationActionIMPInSDK:(BOOL)_inSDK;
 
 /**
 *  设置推送代理方法，可多次调用
