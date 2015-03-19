@@ -3,11 +3,6 @@
 #import <Foundation/Foundation.h>
 
 #pragma mark --
-#pragma mark -- 可以使用此Key来获取应用的状态，状态值参见系统的 * UIApplicationState *
-static NSString *const AppStateKey = @"AppStateKey";  // 应用状态key
-
-
-#pragma mark --
 #pragma mark -- 创建本地通知时的Action值
 typedef NS_ENUM(NSUInteger, LocalPushActionType) {
     LocalPushDefaultAction = 0,     //默认Action，无任何操作。actionValue = @“”
