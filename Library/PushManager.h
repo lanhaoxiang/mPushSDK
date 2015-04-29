@@ -3,6 +3,11 @@
 #import <Foundation/Foundation.h>
 
 #pragma mark --
+#pragma mark -- 可以使用此Key来获取应用的状态，状态值参见系统的 * UIApplicationState *
+static NSString *const AppStateKey = @"AppStateKey";  // 应用状态key
+
+
+#pragma mark --
 #pragma mark -- 创建本地通知时的Action值
 typedef NS_ENUM(NSUInteger, LocalPushActionType) {
     LocalPushDefaultAction = 0,     //默认Action，无任何操作。actionValue = @“”
@@ -31,8 +36,6 @@ typedef NS_ENUM(NSUInteger, LocalPushActionType) {
 - (BOOL)onMessage:(NSString *)title
           content:(NSString *)content
         extention:(NSDictionary *)extention;
-
-
 @end
 
 
@@ -81,14 +84,16 @@ typedef NS_ENUM(NSUInteger, LocalPushActionType) {
 
 
 /**
- *  定义收到远程通知后的操作是否使用SDK内部实现（默认SDK内部实现）。如果SDK内部实现，需要按照需求实现'setDisplayViews:viewAlias:methods:displayModes'方法
+ *  定义收到远程通知后的操作是否使用SDK内部实现（默认SDK内部实现）。
+    如果SDK内部实现，需要按照需求实现'setDisplayViews:viewAlias:methods:displayModes'方法
  *
  *  @param _inSDK 是否SDK内实现
  */
 + (void)setRemoteNotificationActionIMPInSDK:(BOOL)_inSDK;
 
 /**
- *  定义收到本地通知后的操作是否使用SDK内部实现（默认SDK内部实现）。如果SDK内部实现，需要按照需求实现'setDisplayViews:viewAlias:methods:displayModes'方法
+ *  定义收到本地通知后的操作是否使用SDK内部实现（默认SDK内部实现）。
+    如果SDK内部实现，需要按照需求实现'setDisplayViews:viewAlias:methods:displayModes'方法
  *
  *  @param _inSDK 是否SDK内实现
  */
@@ -125,7 +130,6 @@ typedef NS_ENUM(NSUInteger, LocalPushActionType) {
 *
 */
 + (NSString *)getSDKVersion;
-
 
 
 #pragma MARK --
@@ -187,11 +191,18 @@ typedef NS_ENUM(NSUInteger, LocalPushActionType) {
 + (void)setAlias:(NSString *)alias;
 
 /**
-*  为设备设置tag，可以为多个。
+ *  优化的设置tag接口，建议使用（此接口不会重复上传相同的tag名称，推荐使用.）
+ *
+ *  @param tags tag名称列表
+ */
++ (void)ensureTags:(NSArray *)tags;
+
+/**
+*  为设备设置tag，可以为多个。<* 将会在1.7.5之后废弃。 use "ensureTags:" 替代 *>
 *
 *  @param tags tag名称。
 */
-+ (void)setTags:(NSArray *)tags;
++ (void)setTags:(NSArray *)tags; 
 
 /**
 *  删除设置过的tag，可以为多个。
@@ -208,12 +219,5 @@ typedef NS_ENUM(NSUInteger, LocalPushActionType) {
 *  @param finishBlock  接口请求成功后的回调 成功是返回code，失败或者其他错误返回errorMsg
 */
 + (void)authSms:(NSString *)mobile timeInterval:(NSTimeInterval)timeInterval finished:(void (^)(NSString *code, NSString *errorMsg))finishBlock;
-
-/**
-*
-*   如果使用独立托管的mpush server，需要获取设备唯一标识的话，可使用此接口。
-*
-* */
-+ (NSString *)getPushId;
 
 @end
