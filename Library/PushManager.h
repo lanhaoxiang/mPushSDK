@@ -131,6 +131,14 @@ typedef NS_ENUM(NSUInteger, LocalPushActionType) {
 */
 + (NSString *)getSDKVersion;
 
+/**
+ *
+ *  是否忽略GPS信息的获取 （仅对SDK内部有效，SDK外部的GPS获取或忽略需自行处理）
+ *
+ *  @param ignore YES  忽略GPS获取  NO 打开GPS获取。默认为NO
+ *
+ */
++ (void)ignoreGPS:(BOOL)ignore;
 
 #pragma MARK --
 #pragma MARK --  本地通知
