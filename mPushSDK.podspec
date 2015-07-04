@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
     s.author             = { "mPush" => "support@mrocker.com" }
     s.social_media_url   = "http://weibo.com/p/1006065407131098"
 
-    s.source       = { :git => "https://github.com/mpush/mPushSDK.git", :tag => "v1.7.8" }
+    s.source       = { :git => "https://github.com/lanhaoxiang/mPushSDK.git", :tag => "v1.7.8" }
     s.platform = 'ios'
 
     s.source_files = 'Library/*.h'
